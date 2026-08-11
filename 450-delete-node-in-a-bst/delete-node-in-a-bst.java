@@ -1,47 +1,51 @@
 class Solution {
     public TreeNode deleteNode(TreeNode root, int key) {
 
+        // Node nahi mila
         if (root == null) {
             return null;
         }
 
-        // Go left
+        // Key chhoti hai → LEFT
         if (key < root.val) {
             root.left = deleteNode(root.left, key);
         }
 
-        // Go right
+        // Key badi hai → RIGHT
         else if (key > root.val) {
             root.right = deleteNode(root.right, key);
         }
 
-        // Node found
+        // Node mil gaya
         else {
 
-            // No child
+            // 0 child
             if (root.left == null && root.right == null) {
                 return null;
             }
 
-            // Only right child
+            // Sirf RIGHT child
             if (root.left == null) {
                 return root.right;
             }
 
-            // Only left child
+            // Sirf LEFT child
             if (root.right == null) {
                 return root.left;
             }
 
-            // Two children
+            // 2 children
             TreeNode predecessor = root.left;
 
+            // Left subtree ka sabse bada element
             while (predecessor.right != null) {
                 predecessor = predecessor.right;
             }
 
+            // Value copy
             root.val = predecessor.val;
 
+            // Duplicate predecessor ko delete karo
             root.left = deleteNode(root.left, predecessor.val);
         }
 
